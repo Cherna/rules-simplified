@@ -1,12 +1,13 @@
 var express  = require('express');
-var auth0    = require('auth0-oauth2-express');
-var Webtask  = require('webtask-tools');
+// var auth0    = require('auth0-oauth2-express');
+// var Webtask  = require('webtask-tools');
 var app      = express();
 var template = require('./views/index.jade');
 
 app.use(auth0({
-  clientName: 'Custom Social Connections',
-  scopes:     'read:connections create:connections update:connections delete:connections read:clients'
+  clientName: 'Simple Rules',
+  // scopes:     'read:connections create:connections update:connections delete:connections read:clients'
+  scopes:     'read:rules create:rules update:rules delete:rules read:clients read:rule_settings update:rule_settings'
 }));
 
 app.get('/', function (req, res) {

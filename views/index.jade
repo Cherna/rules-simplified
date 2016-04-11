@@ -4,6 +4,8 @@ block title
   title Custom Social Connections
 
 block content
+  div.
+    SomeRandomString
   script(type="text/javascript").
     window.env = {
       webtasks: {
@@ -14,7 +16,9 @@ block content
         var value = null;
 
         try {
-          value = jwt_decode(window.sessionStorage.getItem('token')).aud[0].replace('/api/v2', '/authorize');
+          //- value = jwt_decode(window.sessionStorage.getItem('token')).aud[0].replace('/api/v2', '/authorize');
+          value = jwt_decode(window.sessionStorage.getItem('token')).aud[0];
+          console.log(value);
         } catch (err) {
           console.log('Token could not be decoded');
         }
@@ -22,4 +26,14 @@ block content
         return value;
       })()
     };
-  script(src='@assets_baseurl/@extension_name.min.js')
+  //- script(src='@assets_baseurl/@extension_name.min.js')
+
+  script(type="text/javascript").
+    $.ajax({
+      url: window.env.userUrl + 'rules',
+      beforeSend: function(xhr) {xhr.setRequestHeader('Authorization', 'Bearer ' + window.sessionStorage.getItem('token'));},
+      type: 'GET',
+      success: function(data) {
+        console.log(data);
+      }
+    })
